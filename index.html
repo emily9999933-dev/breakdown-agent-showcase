@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>爆款拆解 Agent · 公开展示</title>
+<style>
+  :root{
+    --bg:#f6f8fb; --card:#ffffff; --line:#e4e9f0; --text:#1f2937; --muted:#6b7280;
+    --brand:#2563eb; --brand-dark:#1d4ed8; --accent:#0ea5e9; --warn:#b45309; --warn-bg:#fffbeb;
+    --human:#dc2626; --human-bg:#fef2f2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+  a{color:var(--brand);text-decoration:none}
+  .container{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  /* 顶部导航 */
+  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav{display:flex;align-items:center;gap:24px;height:56px}
+  nav .logo{font-weight:700;font-size:16px;color:var(--brand)}
+  nav .links{margin-left:auto;display:flex;gap:18px;font-size:14px;color:var(--muted)}
+  nav .links a:hover{color:var(--brand)}
+
+  /* Hero */
+  .hero{background:linear-gradient(135deg,#eff6ff 0%,#f0f9ff 100%);border-bottom:1px solid var(--line);padding:72px 0 56px}
+  .hero .tag{display:inline-block;background:var(--brand);color:#fff;font-size:12px;padding:4px 12px;border-radius:999px;margin-bottom:16px}
+  .hero h1{font-size:38px;line-height:1.25;letter-spacing:.5px}
+  .hero .sub{font-size:17px;color:var(--muted);margin-top:12px;max-width:760px}
+  .hero .actions{margin-top:28px;display:flex;gap:12px;flex-wrap:wrap}
+  .btn{display:inline-block;border-radius:8px;padding:10px 20px;font-size:15px;font-weight:600;cursor:pointer;border:1px solid transparent;transition:.15s}
+  .btn-primary{background:var(--brand);color:#fff}
+  .btn-primary:hover{background:var(--brand-dark)}
+  .btn-ghost{background:#fff;color:var(--brand);border-color:var(--line)}
+  .btn-ghost:hover{border-color:var(--brand)}
+
+  /* 区块 */
+  section{padding:56px 0}
+  section h2{font-size:24px;margin-bottom:8px}
+  section .lead{color:var(--muted);margin-bottom:28px}
+  .grid{display:grid;gap:16px}
+  .grid-2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  .grid-3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px}
+  .card h3{font-size:16px;margin-bottom:8px}
+  .card p,.card li{font-size:14px;color:var(--muted)}
+  .card ul{padding-left:18px}
+  .num{display:inline-flex;width:26px;height:26px;align-items:center;justify-content:center;background:var(--brand);color:#fff;border-radius:50%;font-size:13px;font-weight:700;margin-right:8px}
+
+  /* 流程图 */
+  .flowcard{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px;overflow-x:auto}
+  .flowcard pre{min-width:640px}
+
+  /* 边界 / 兜底 */
+  .warn{background:var(--warn-bg);border:1px solid #fde68a;border-radius:10px;padding:14px 18px;font-size:14px;color:var(--warn)}
+  .human{background:var(--human-bg);border:1px solid #fecaca;border-radius:10px;padding:14px 18px;font-size:14px;color:var(--human)}
+
+  /* 模拟体验 */
+  .demo{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:24px}
+  .demo label{display:block;font-size:14px;font-weight:600;margin:14px 0 6px}
+  .demo input,.demo textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:14px;font-family:inherit}
+  .demo textarea{min-height:120px;resize:vertical}
+  .demo .row3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .demo .row3 label{display:block;font-size:13px;font-weight:600;margin:0 0 4px}
+  .badge{display:inline-block;background:#eef2ff;color:var(--brand-dark);border-radius:6px;padding:2px 8px;font-size:12px;margin-left:8px}
+  .output{display:none;margin-top:20px;border-top:1px dashed var(--line);padding-top:18px}
+  .output .kv{display:grid;grid-template-columns:110px 1fr;gap:6px 14px;font-size:14px}
+  .output .kv dt{color:var(--muted);font-weight:600}
+  .output .kv dd{word-break:break-word}
+  .summary{background:#f0f9ff;border:1px solid #bae6fd;border-radius:10px;padding:14px 16px;margin-top:16px;font-size:14px}
+
+  /* 安全声明 / 页脚 */
+  .security{background:#111827;color:#d1d5db;padding:40px 0;font-size:14px}
+  .security h2{color:#fff;font-size:20px}
+  footer{padding:20px 0;text-align:center;color:var(--muted);font-size:13px;background:var(--bg)}
+  @media (max-width:720px){.hero h1{font-size:28px}.nav .links{display:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="container">
+    <span class="logo">爆款拆解 Agent</span>
+    <div class="links">
+      <a href="#ability">能力</a>
+      <a href="#flow">工作流</a>
+      <a href="#io">输入输出</a>
+      <a href="#demo">模拟体验</a>
+      <a href="#boundary">边界</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <span class="tag">AI Agent 展示</span>
+    <h1>爆款拆解 Agent</h1>
+    <p class="sub">当收到素材审阅台中「已选」状态的素材时，自动完成拆解前筛选、标题与正文拆解、互动数据解读、爆点归因、可复用模板提取与质量校验，输出到「拆解结果」表与本地模板库。</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="#demo">试试模拟体验</a>
+      <a class="btn btn-ghost" href="#ability">查看能力与规范</a>
+    </div>
+  </div>
+</section>
+
+<section id="ability">
+  <div class="container">
+    <h2>能力模块</h2>
+    <p class="lead">把「已选素材」变成可复用的爆款认知资产：这篇为什么有效、这套怎么复用。</p>
+    <div class="grid grid-3">
+      <div class="card"><h3><span class="num">1</span>前置筛选</h3><p>书名缺失、收藏&lt;50、评论&lt;10、互动综合低 → 跳过并记录原因（评论权重最高）。</p></div>
+      <div class="card"><h3><span class="num">2</span>标题拆解</h3><p>钩子优先级：悬念 → 痛点 → 数字；多钩子都记、标主钩子；关键词 3-5 个；情绪看词与标点。</p></div>
+      <div class="card"><h3><span class="num">3</span>正文拆解</h3><p>按「开头 → 结论 → 中间」：开头钩子、结构类型、结尾引导（下单/互动）、卖点。</p></div>
+      <div class="card"><h3><span class="num">4</span>互动数据解读</h3><p>占比定性：转发 ≥50% 实用型、评论 ≥50% 争议型、否则按点赞 → 共鸣/混合。</p></div>
+      <div class="card"><h3><span class="num">5</span>爆点归因</h3><p>三方向（标题钩子 / 内容实用 / 选题人群）看证据，主驱动 = 证据最明显者，归因带证据。</p></div>
+      <div class="card"><h3><span class="num">6</span>模板提取</h3><p>标题公式（可替换槽位）+ 正文结构模板（4-6 步步骤链），换新主题能直接套用。</p></div>
+      <div class="card"><h3><span class="num">7</span>质量校验</h3><p>回看原文核对：钩子可回溯、结构可还原；不过自动修正重试 1 次，仍不过标「需复核」。</p></div>
+      <div class="card"><h3><span class="num">8</span>输出与联动</h3><p>写入拆解结果（整段 + 结构化字段）、素材状态联动「已拆解」、本地模板库去重追加。</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="flow">
+  <div class="container">
+    <h2>工作流</h2>
+    <p class="lead">完整判断分支与人工兜底（红色节点 = 必须暂停交给人）。</p>
+    <div class="flowcard">
+<pre class="mermaid">
+flowchart TD
+    A[读取「已选」素材] --> B{前置筛选：书名缺失 / 收藏&lt;50 / 评论&lt;10?}
+    B -- 是 --> H1[人工：处理素材或补信息<br/>记录跳过原因]
+    B -- 否 --> C{互动综合低?<br/>评论权重最高}
+    C -- 是 --> H1
+    C -- 否 --> D{入模检查：正文缺失 / 标题正文无关?}
+    D -- 是 --> H1
+    D -- 否 --> E[拆标题：钩子 悬念→痛点→数字<br/>多钩子都记+标主钩子；关键词3-5；情绪]
+    E --> F[拆正文：开头→结论→中间<br/>结构 / 结尾引导 / 卖点]
+    F --> G{互动占比定性}
+    G -- 转发占比≥50% --> G1[实用型]
+    G -- 评论占比≥50% --> G2[争议型]
+    G -- 其他 --> G3[共鸣型 / 混合]
+    G1 --> H[爆点归因：三方向找证据]
+    G2 --> H
+    G3 --> H
+    H --> I{证据足够 且 与互动信号一致?}
+    I -- 否 --> H2[人工：判断归因]
+    I -- 是 --> J[提取模板：标题公式槽位 + 正文步骤链]
+    J --> K[回看原文核对：钩子可回溯 / 结构可还原]
+    K --> L{校验通过?}
+    L -- 是 --> M[写入拆解结果<br/>状态联动「已拆解」+ 模板库去重]
+    L -- 否 --> N{自动修正重试 1 次后通过?}
+    N -- 是 --> M
+    N -- 否 --> H3[人工：标「需复核」查看]
+    M --> O[结束]
+
+    classDef human fill:#ffe6e6,stroke:#d33,color:#333;
+    class H1,H2,H3 human;
+</pre>
+    </div>
+  </div>
+</section>
+
+<section id="io">
+  <div class="container">
+    <h2>输入 / 输出 / 成功标准</h2>
+    <p class="lead">运行规范，来自最终确认版岗位卡。</p>
+    <div class="grid grid-3">
+      <div class="card"><h3>输入</h3><ul>
+        <li>素材审阅台「已选」素材：标题、正文、互动数据（赞/评/转/收藏）、链接</li>
+      </ul></div>
+      <div class="card"><h3>输出</h3><ul>
+        <li>拆解结果表：整段拆解 + 结构化字段（钩子/结构/归因/模板等）</li>
+        <li>本地模板库（供创作 Agent 复用）</li>
+        <li>素材状态联动「已选 → 已拆解」</li>
+      </ul></div>
+      <div class="card"><h3>成功标准</h3><ul>
+        <li>拆解可追溯、钩子可回溯原文、结构可还原</li>
+        <li>模板换新主题可产出样稿</li>
+        <li>归因与互动信号不矛盾、字段完整</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="demo">
+  <div class="container">
+    <h2>模拟体验 <span class="badge">演示模式 · 规则版 · 不调用真实服务</span></h2>
+    <p class="lead">输入一段标题与正文（可点「填入示例」），前端按简化规则即时展示拆解效果。仅为体验展示，不接入任何 API、不读取真实数据。</p>
+    <div class="demo">
+      <label>标题</label>
+      <input id="demoTitle" type="text" placeholder="例如：孩子总问为什么？这50个回答帮你轻松应对">
+      <label>正文（前 300 字即可）</label>
+      <textarea id="demoBody" placeholder="粘贴/输入一段正文，用于演示结构与卖点拆解…"></textarea>
+      <div class="row3" style="margin-top:14px">
+        <div><label>点赞</label><input id="demoLikes" type="number" value="120"></div>
+        <div><label>评论</label><input id="demoComments" type="number" value="40"></div>
+        <div><label>转发</label><input id="demoShares" type="number" value="260"></div>
+      </div>
+      <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="runDemo()">开始拆解（演示）</button>
+        <button class="btn btn-ghost" onclick="fillSample()">填入示例</button>
+      </div>
+      <div id="demoOutput" class="output">
+        <dl class="kv">
+          <dt>标题钩子</dt><dd id="oHook">-</dd>
+          <dt>关键词</dt><dd id="oKeywords">-</dd>
+          <dt>标题情绪</dt><dd id="oEmotion">-</dd>
+          <dt>正文结构</dt><dd id="oStructure">-</dd>
+          <dt>结尾引导</dt><dd id="oEnding">-</dd>
+          <dt>互动信号</dt><dd id="oSignal">-</dd>
+          <dt>爆点归因</dt><dd id="oAttribution">-</dd>
+          <dt>标题公式</dt><dd id="oFormula">-</dd>
+          <dt>结构模板</dt><dd id="oTemplate">-</dd>
+        </dl>
+        <div id="oSummary" class="summary"></div>
+        <p style="font-size:12px;color:var(--muted);margin-top:10px">⚠️ 演示输出由前端简化规则生成，仅供体验；真实拆解由 LLM + 质量校验完成，效果更深入。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="boundary">
+  <div class="container">
+    <h2>能力边界与人工兜底</h2>
+    <p class="lead">清晰界定做什么、不做什么、何时交给人。</p>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>本期不做</h3>
+        <ul>
+          <li>不洗稿、不改写文案（归创作 Agent）</li>
+          <li>不生成完整脚本 / 成片（归创作 / 制作 Agent）</li>
+          <li>不判断素材能不能用（判断权在人工审阅台）</li>
+          <li>不发布、不挂商品链接（归发布 / 选品 Agent）</li>
+          <li>不碰选品 / 版权判定、不做周报趋势分析</li>
+        </ul>
+      </div>
+      <div class="human">
+        <h3 style="color:var(--human)">必须暂停交给人确认</h3>
+        <ul>
+          <li>素材本身有问题（正文缺失 / 标题正文无关 / 前置筛选不过）</li>
+          <li>校验不过或归因证据不足 → 标「需复核」</li>
+          <li>模板质量存疑 → 人工确认是否可用</li>
+          <li>连续失败率 &gt;20% → 暂停并提醒人工</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="security">
+  <div class="container">
+    <h2>安全与数据声明</h2>
+    <p style="margin-top:12px;max-width:820px">本页面为公开展示对象：<strong style="color:#fff">不接入任何 API、不连接飞书数据、不含任何密钥</strong>。页面中的「模拟体验」由前端预设规则生成，示例数据均为脱敏演示内容。访客仅能查看与体验演示，无法触发真实采集、拆解或创作流程。</p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">爆款拆解 Agent · 公开展示页 · 依据最终确认版岗位卡 v2 制作</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({startOnLoad:true, theme:"base", themeVariables:{primaryColor:"#eff6ff",primaryBorderColor:"#93c5fd",lineColor:"#94a3b8",secondaryColor:"#fff",tertiaryColor:"#fef2f2",tertiaryBorderColor:"#fca5a5"}});
+
+  const STOP_WORDS = /的|了|吗|呢|你|我|他|她|它|这个|怎么|什么|就是|都|会|能|要|在|是|有|和|与|或|不|没|别|再/g;
+
+  function pickKeywords(text){
+    const tags = (text.match(/#[^#\s]+/g) || []).map(t=>t.slice(1));
+    const words = (text.replace(tags.join(' '),'') || text).split(/[\s，。！？、：；“”"'（）()\-—\d%]+/).filter(Boolean);
+    const kept = [];
+    for(const w of words){
+      const clean = w.replace(STOP_WORDS,'');
+      if(clean.length>=2 && !kept.includes(clean)) kept.push(clean);
+      if(kept.length>=5) break;
+    }
+    return tags.concat(kept).slice(0,5).join('、') || '主题词';
+  }
+
+  function analyzeDemo(){
+    const title = document.getElementById('demoTitle').value.trim();
+    const body = document.getElementById('demoBody').value.trim();
+    const likes = +document.getElementById('demoLikes').value || 0;
+    const comments = +document.getElementById('demoComments').value || 0;
+    const shares = +document.getElementById('demoShares').value || 0;
+
+    // 钩子：悬念 → 痛点 → 数字 → 人群
+    const hooks = [];
+    if(/[？?]|为什么|竟然|居然|没想到|揭秘/.test(title)) hooks.push('悬念');
+    if(/避雷|别买|坑|后悔|上当|不值|慎买|避坑|踩雷/.test(title)) hooks.push('痛点');
+    if(/\d/.test(title)) hooks.push('数字');
+    if(/妈妈|孩子|家长|老人|学生|宝妈|女儿|儿子/.test(title)) hooks.push('人群');
+    const hookText = hooks.length ? hooks.join(' / ') : '主题直给';
+    const mainHook = hooks[0] || '主题直给';
+
+    // 情绪
+    let emotion = '中性';
+    if(/避雷|别买|坑|后悔|上当|不值|慎买|吐槽/.test(title)) emotion = '负面';
+    else if(/绝|神|推荐|值得|太|必入|惊喜|惊艳/.test(title)) emotion = '正面';
+    else if(/[？?]|为什么/.test(title)) emotion = '好奇';
+
+    // 结构
+    let structure = '平铺式';
+    const lines = body.split('\n').filter(Boolean);
+    const listy = lines.filter(l=>/^\s*[-•*]|\d+[.、）)]/.test(l.trim())).length;
+    if(listy >= 2) structure = '清单式';
+    else if(/有一次|那天|我女儿|我儿子|去年|今年/.test(body)) structure = '故事式';
+    else if((body.match(/[？?]/g)||[]).length >= 2) structure = '问答式';
+
+    // 结尾引导
+    const tail = body.slice(-100);
+    let ending = '无引导';
+    if(/链接|橱窗|下单|主页|私信|购买/.test(tail)) ending = '引导下单';
+    else if(/关注|点赞|收藏|转发|评论区|留言/.test(tail)) ending = '引导互动';
+
+    // 互动信号：占比 ≥50%
+    const total = likes + comments + shares;
+    let signal = '无数据';
+    if(total > 0){
+      const sr = shares/total, cr = comments/total;
+      signal = sr >= 0.5 ? '实用型' : (cr >= 0.5 ? '争议型' : '共鸣型 / 混合');
+    }
+
+    // 归因（带证据）
+    let attribution = '数据不足，需人工判断';
+    if(mainHook !== '主题直给' && signal !== '无数据') attribution = '标题钩子（'+mainHook+'）与互动信号（'+signal+'）共同驱动';
+    else if(mainHook !== '主题直给') attribution = '标题钩子（'+mainHook+'）抓人';
+    else if(signal !== '无数据') attribution = '互动信号（'+signal+'）驱动';
+
+    // 模板
+    const formula = mainHook + ' + 关键词 + ' + emotion;
+    const template = structure + '：开头（' + (ending==='无引导'?'自然引入':'钩子+'+ending) + '）→ 正文按' + structure + '推进 → 结尾' + ending;
+    const summary = '标题靠「'+mainHook+'」吸引人，情绪偏'+emotion+'；正文采用'+structure+'，结尾'+ending+'；互动信号为'+signal+'；爆点归因：'+attribution+'。可复用标题公式「'+formula+'」，结构模板「'+template+'」。';
+
+    document.getElementById('oHook').textContent = hookText + '（主钩子：'+mainHook+'）';
+    document.getElementById('oKeywords').textContent = pickKeywords(title);
+    document.getElementById('oEmotion').textContent = emotion;
+    document.getElementById('oStructure').textContent = structure;
+    document.getElementById('oEnding').textContent = ending;
+    document.getElementById('oSignal').textContent = signal;
+    document.getElementById('oAttribution').textContent = attribution;
+    document.getElementById('oFormula').textContent = formula;
+    document.getElementById('oTemplate').textContent = template;
+    document.getElementById('oSummary').textContent = summary;
+    document.getElementById('demoOutput').style.display = 'block';
+  }
+
+  function fillSample(){
+    document.getElementById('demoTitle').value = '孩子总问为什么？这50个回答帮你轻松应对';
+    document.getElementById('demoBody').value =
+      '你家孩子是不是也整天追着问“为什么”？别急着敷衍，这是培养科学思维的好机会！\n'+
+      '给爸妈的三个小技巧：\n'+
+      '一，用比喻代替术语，比如把细菌说成“小坏蛋”；\n'+
+      '二，边说边比划，像讲地球自转就转个圈；\n'+
+      '三，不知道就大方说“我们一起查书吧”。\n'+
+      '进阶玩法：先问“你觉得呢？”，再一起做个小实验。\n'+
+      '每个“为什么”都是亲子探索的起点，你的耐心回答就是最好的科学启蒙。\n'+
+      '先收藏，用到时方便找！';
+    document.getElementById('demoLikes').value = 120;
+    document.getElementById('demoComments').value = 40;
+    document.getElementById('demoShares').value = 260;
+    analyzeDemo();
+  }
+
+  function runDemo(){ analyzeDemo(); }
+</script>
+</body>
+</html>
